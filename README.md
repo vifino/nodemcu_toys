@@ -22,6 +22,11 @@ It has following libraries built in:
 - HTTP
 - net
 - node
+- PWM
+- rotary
+- RTC time
+- sntp
+- SPI
 - timer
 - UART
 - WiFi

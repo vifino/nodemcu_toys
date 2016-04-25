@@ -27,10 +27,13 @@ function _M.log(state_name, level, message)
 	local level = level and tonumber(level) or 2
 	local msg = "[" .. colors.bright .. colors.black .. (state_name or "Unnamed") .. colors.reset .. "]> "
 	if level == 0 then
+		led(255, 0, 0)
 		msg = msg .. colors.bright .. colors.red .. message .. colors.reset
 	elseif level == 1 then
+		led(255, 100, 0)
 		msg = msg .. colors.yellow .. message .. colors.reset
 	elseif level == 2 then
+		--led(0, 255, 0)
 		msg = msg .. message
 	elseif level >= 3 then
 		if _M.debug then

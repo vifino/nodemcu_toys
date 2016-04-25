@@ -12,5 +12,5 @@ terminal:
 	$(UPLOADER) "$^" -n "$@"
 
 # Dependencies
-init.lua: wifi-setup.lua loadremote.lua logger.lua ansicolors.lua
+init.lua: wifi-setup.lua loadremote.lua logger.lua ansicolors.lua led.lua
 	$(UPLOADER_NOBC) "scripts/init.lua" -n "init.lua"
