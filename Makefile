@@ -1,11 +1,12 @@
 # Tools
-UPLOADER?=sudo nodemcu-tool upload -o -c
-UPLOADER_NOBC?=sudo nodemcu-tool upload -o
+NODEMCU_TOOL?=sudo nodemcu-tool -b 115200
+UPLOADER?=$(NODEMCU_TOOL) upload -o -c
+UPLOADER_NOBC?=$(NODEMCU_TOOL) upload -o
 
 # Tool rules
 
 terminal:
-	sudo nodemcu-tool terminal
+	$(NODEMCU_TOOL) terminal
 
 # Uploading rules
 %.lua: scripts/%.lua

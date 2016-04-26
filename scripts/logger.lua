@@ -1,6 +1,7 @@
 -- Log module
 
-local _M = {}
+local _M, modname = {}, ...
+package.loaded[modname] = nil
 
 _M.version = "0.0.1"
 
@@ -21,17 +22,25 @@ _M.important = 1
 _M.normal = 2
 _M.debug = 3
 
+-- Localizing just the required things to save memory.
+local col_bright = colors.bright
+local col_reset = colors.reset
+local col_black = colors.black
+local col_red = colors.red
+local col_yellow = colors.yellow
+colors = nil
+
 -- The most commonly used log function, its colorful!
 -- Format (log level colored): [STATENAME]> message
 function _M.log(state_name, level, message)
 	local level = level and tonumber(level) or 2
-	local msg = "[" .. colors.bright .. colors.black .. (state_name or "Unnamed") .. colors.reset .. "]> "
+	local msg = "[" .. col_bright .. col_black .. (state_name or "Unnamed") .. col_reset .. "]> "
 	if level == 0 then
 		led(255, 0, 0)
-		msg = msg .. colors.bright .. colors.red .. message .. colors.reset
+		msg = msg .. col_bright .. col_red .. message .. col_reset
 	elseif level == 1 then
 		led(255, 100, 0)
-		msg = msg .. colors.yellow .. message .. colors.reset
+		msg = msg .. col_yellow .. message .. col_reset
 	elseif level == 2 then
 		--led(0, 255, 0)
 		msg = msg .. message

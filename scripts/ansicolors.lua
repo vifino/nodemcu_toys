@@ -1,5 +1,8 @@
 -- Simple ANSI color table.
 
+local modname = ...
+package.loaded[modname] = nil
+
 local escape = string.char(27) .. '[%dm'
 
 return {

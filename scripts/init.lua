@@ -1,4 +1,13 @@
 print("NodeMCU init.lua loading up...")
+local maxfreeheap = node.heap()
+
+-- Require hack to save memory.
+local old_require = require
+function require(lib)
+	local ret = old_require(lib)
+	package.loaded[lib] = nil
+	return ret
+end
 
 -- Timers.
 -- Kinda hacky, but it works! :D
@@ -83,11 +92,13 @@ soon(5000, function()
 		package.loaded["loadremote"] = nil
 
 		-- Display some stats
+		collectgarbage()
 		local heap = node.heap()
-		local mempercent = round((heap/512000)*100, 2) -- 512kb is the max the chip has, afaik
-		log("Heap memory: "..tostring(heap).."/512000 Bytes used. ("..tostring(mempercent).."%)")
+		local mempercent = round((heap/maxfreeheap)*100, 2) -- old heap is the max lua side can get afaik
+		log("Heap memory: "..tostring(maxfreeheap-heap).."/"..tostring(maxfreeheap).." Bytes used. ("..tostring(100-mempercent).."%)")
 		heap = nil
 		mempercent = nil
+		maxfreeheap = nil
 
 		local _, fs_used, fs_total = file.fsinfo()
 		local fspercent = round((fs_used/fs_total)*100, 2)
@@ -97,8 +108,15 @@ soon(5000, function()
 
 		log("Fetching new FW via HTTP...")
 		loadremote.load("boot.lua", function(f)
+			-- Cleanup
 			led() -- turn off all the things
+			loadremote = nil
+
+			-- Start func
 			f()
+
+			-- Done
+			f = nil
 			log("Done.")
 		end)
 	else -- no ip? run wifi-setup to reconnect to wifi, running this file shortly afterwards to check again.

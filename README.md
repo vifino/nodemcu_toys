@@ -14,16 +14,20 @@ There is a prebuilt firmware of the `dev` branch in the fw folder.
 
 It has following libraries built in:
 
+- ADC
 - bit
 - CJSON
 - crypto
+- encoder
 - file
 - GPIO
 - HTTP
+- i2c
 - net
 - node
+- 1-Wire
 - PWM
-- rotary
+- RTC mem
 - RTC time
 - sntp
 - SPI

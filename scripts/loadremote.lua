@@ -1,5 +1,6 @@
 -- loadremote.lua: Dynamic loading of new firmware.
-local loadremote = {}
+local loadremote, modname = {}, ...
+package.loaded[modname] = nil
 
 -- Server base URL
 loadremote.urls = {

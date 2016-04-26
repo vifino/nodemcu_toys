@@ -1,4 +1,7 @@
 -- RGB LED attached to D1-D3 with R, G and B respectively.
+local modname = ...
+package.loaded[modname] = nil
+
 if pwm then
 	function led(r,g,b)
 		local red = ( r == true ) and 255 or r
